@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title - My Website</title>
+    <link href="~/css/site.css" rel="stylesheet" />
+    <style>
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-item {
+            margin-left: 10px;
+        }
+
+        .logout-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;  /* Добавляем это свойство */
+        }
+
+            .logout-container .nav-item {
+                margin-left: 10px;
+            }
+    </style>
+</head>
+<body>
+    <div class='header'>
+        <div class='container'>
+            <div class='header-line'>
+                <div class='header-logo'>
+                    <!-- Your logo here -->
+                </div>
+                <div class='nav'>
+                   
+                    @if (Context.Session.GetInt32("LoggedDeveloperId") != null)
+                    {
+                        <a class="logo" asp-area="" asp-page="/Index">A</a>
+                    }
+                    else
+                    {
+                        <a class="logo">A</a>
+                    }
+                    
+                        @{
+                        var skill = TempData["skill_id"];
+                    }
+
+                    @if (skill != null)
+                    {
+                        <a class="nav-item" asp-area="" asp-page="ReqRes" asp-route-skillId="@skill">Вопрос-ответ</a>
+                        <a class="nav-item" asp-area="" asp-page="Training" asp-route-skillId="@skill">Обучение</a>
+                        <a class="nav-item" asp-area="" asp-page="Dialogs" asp-route-skillId="@skill">Диалоги</a>
+                        <a class="nav-item" asp-area="" asp-page="Statistics" asp-route-skillId="@skill">Статистика</a>
+                    }
+                </div>
+                <div class='nav logout-container'>
+                    @{
+                        
+                            int? id = Context.Session.GetInt32("LoggedDeveloperId");
+                    }
+                    @if (id != null)
+                    {
+                        <div class='nav logout-container'>
+                            <form method="post" asp-page-handler="Logout" asp-page="/Account/Login">
+                                <button type="submit" class="nav-item btn btn-link">Выход</button>
+                            </form>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='body'>
+        <!-- Main Content -->
+        <div class="col-sm-9 main-content">
+            <div class="content">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <!-- Footer content -->
+    </footer>
+</body>
+</html>
+

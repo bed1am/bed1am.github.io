@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Alice1.Migrations
 {
     [DbContext(typeof(MainContext))]
-    [Migration("20240326175522_Inicial")]
-    partial class Inicial
+    [Migration("20240506191804_AllowNullInRequestField")]
+    partial class AllowNullInRequestField
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,7 +54,6 @@ namespace Alice1.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Request")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Response")
@@ -114,7 +113,6 @@ namespace Alice1.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("request")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("skillId")

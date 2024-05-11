@@ -1,0 +1,46 @@
+﻿@page "/{skillId}/Dialogs"
+@model Alice1.Views.DialogsModel
+@{
+    ViewData["Title"] = "Вопрос-ответ";
+}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="~/css/site.css" rel="stylesheet" />
+</head>
+
+<table class="table">
+    <thead>
+        <tr>
+            @* <th class="nav-item">Имя пользователя</th> *@
+            <th class="nav-item">Сообщение</th>
+            <th class="nav-item">Ответ</th>
+            <th class="nav-item">Дата</th>
+            <th class="nav-item">Имя пользователя</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (User user in Model.NewUserList)
+        {
+            <tr>
+                @* <td class="nav-item">@user.name</td> *@
+                
+                <td class="nav-item">@user.request</td>
+
+                @foreach (ReqRes reqRes in Model.NewReqResList)
+                    @if (user.request == reqRes.Request)
+                    {
+                        <td class="nav-item">@reqRes.Response</td>
+                    }
+                    
+                    
+
+
+               
+                <td class="nav-item">@user.date</td>
+                <td class="nav-item">@user.name</td>
+            </tr>
+        }
+
+    </tbody>
+</table>

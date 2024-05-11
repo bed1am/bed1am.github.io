@@ -1,0 +1,63 @@
+﻿@page "/{skillId}/ReqRes"
+@model Alice1.Views.ReqResModel
+@{
+    ViewData["Title"] = "Вопрос-ответ";
+}
+<MyComponent model=skillId />
+<h1 class="nav-item">Добавить вопрос ответ</h1>
+<form method="post">
+   
+    <a class="nav-item">Вопрос:</a>
+    <input type="text" name="Request" />
+    <a class="nav-item"></a>
+    <a class="nav-item"></a>
+    <a class="nav-item">Ответ:</a>
+    <input type="text" name="Response" />
+    <a class="nav-item"></a>
+    <a class="nav-item"></a>
+    <button class="nav-item" type="submit">
+        Добавить
+    </button>
+
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th class="nav-item">Вопрос</th>
+            <th class="nav-item">Ответ</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ReqRes ReqRess in Model.NewReqResList)
+        {
+            <tr>
+                <td class="nav-item">@ReqRess.Request</td>
+                <td class="nav-item">@ReqRess.Response</td>
+                <td>
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@ReqRess.Id">
+                        <button type="submit" class="nav-item">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+  
+</table>
+<h1 class ="nav-item">Изменить данные навыка</h1>
+<form method="post" asp-page-handler="Change" asp-route-id="skillId">
+    @* <input type="hidden" name="skillId1" value="@TempData[" skill_id"]" /> *@
+    <a class="nav-item">Название навыка:</a>
+    <input type="text" name="name" />
+
+    <a class="nav-item"></a>
+    <a class="nav-item"></a>
+    <a class="nav-item">Webhook:</a>
+    <input type="text" name="webhook" />
+    <a class="nav-item"></a>
+    <a class="nav-item"></a>
+    <button class="nav-item" type="submit">
+        Изменить
+    </button>
+
+</form>

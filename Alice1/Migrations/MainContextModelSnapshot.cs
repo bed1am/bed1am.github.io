@@ -39,7 +39,7 @@ namespace Alice1.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("developers");
+                    b.ToTable("Developers");
                 });
 
             modelBuilder.Entity("Alice1.Models.ReqRes", b =>
@@ -51,7 +51,6 @@ namespace Alice1.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Request")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Response")
@@ -91,7 +90,7 @@ namespace Alice1.Migrations
 
                     b.HasIndex("developerId");
 
-                    b.ToTable("skills");
+                    b.ToTable("Skills");
                 });
 
             modelBuilder.Entity("Alice1.Models.User", b =>
@@ -111,7 +110,6 @@ namespace Alice1.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("request")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("skillId")
@@ -121,7 +119,7 @@ namespace Alice1.Migrations
 
                     b.HasIndex("skillId");
 
-                    b.ToTable("users");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Alice1.Models.ReqRes", b =>

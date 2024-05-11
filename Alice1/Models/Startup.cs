@@ -4,7 +4,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Linq;
 
 using System.Threading.Tasks;
 
@@ -12,75 +15,69 @@ public class Startup
 {
     public void Configure(IApplicationBuilder app)
     {
+        var optionsBuilder = new DbContextOptionsBuilder<MainContext>();
+        optionsBuilder.UseSqlServer("Server=KOMPUTER\\SQLEXPRESS;Database=AliceDB;Trusted_Connection=True;TrustServerCertificate=True;");
+        var dbContext = new MainContext(optionsBuilder.Options);
         
 
+        List<string> hookUrls = dbContext.Skills.Select(s => s.hook_url).ToList();
+        Console.WriteLine(hookUrls);
         app.UseRouting();
         app.UseEndpoints(endpoints =>
         {
-            endpoints.MapPost("/api/endpoint", async context =>
+            foreach (var hookUrl in hookUrls)
             {
-                
-                
-
-                // Преобразование JSON-данных в модель
-                var requestData = await DeserializeRequestAsync<YourModel>(context);
-                
-
-
-                var optionsBuilder = new DbContextOptionsBuilder<MainContext>();
-                optionsBuilder.UseSqlServer("Server=KOMPUTER\\SQLEXPRESS;Database=AliceDB;Trusted_Connection=True;TrustServerCertificate=True;");
-
-                var dbContext = new MainContext(optionsBuilder.Options);
-                ReqRes reqRes1 = dbContext.ReqRess
-                .Where(reqRes => requestData.request.command.Equals(reqRes.Request))
-                .First();
-                requestData.request.res_command = reqRes1.Response;
-                //for (dbContext.ReqRess.Id = 2; dbContext.ReqRess.Id < 7;i++)
-                //    if (requestData.request.command == "")
-                //    {
-                //        requestData.request.res_command = "Всем привет и это моя история знакомства с алисой. Если хочеш узнать больше напиши ОКЕЙ";
-                //    }
-                //else
-                //if (requestData.request.command == "ОКЕЙ")
-                //{
-                //    requestData.request.res_command = "Hello";
-                //}
-
-                dbContext.users.Add(new User
+                endpoints.MapPost(hookUrl, async context =>
                 {
-                    request = requestData.request.command,
-                    name = requestData.session.user.user_id,
-                    skill = dbContext.skills.Where(skill => skill.Id == 1).First(),
-                    date = DateTime.Now.ToString(),
 
-                }) ;
-                
 
-                await dbContext.SaveChangesAsync();
-                // Обработка данных
-                // requestData теперь содержит объект вашей модели с данными из JSON
 
-                // Создание объекта ответа
-                var responseObject = new
-                {
-                    version = "1.0",
-                    session = requestData.session,
-                    response = new
+                    // Преобразование JSON-данных в модель
+                    var requestData = await DeserializeRequestAsync<YourModel>(context);
+
+                    ReqRes reqRes1 = dbContext.ReqRess
+                    .Where(reqRes => requestData.request.command.Equals(reqRes.Request) && reqRes.skill.hook_url == hookUrl)
+                    .First();
+                    requestData.request.res_command = reqRes1.Response;
+
+
+                    dbContext.Users.Add(new User
                     {
-                        text = requestData.request.res_command,
-                        end_session = "false"
-                    }
-                };
-                Console.WriteLine(responseObject);
-                // Сериализация объекта ответа в формат JSON
-                var responseJson = JsonConvert.SerializeObject(responseObject);
+                        request = requestData.request.command,
+                        name = requestData.session.user.user_id,
+                        skill = dbContext.Skills.Where(skill => skill.hook_url == hookUrl).First(),
+                        date = DateTime.Now.ToString(),
 
-                // Устанавливаем код состояния 200 OK и отправляем JSON-ответ
-                context.Response.StatusCode = 200;
-                context.Response.ContentType = "application/json";
-                await context.Response.WriteAsync(responseJson);
-            });
+                    });
+
+
+                    await dbContext.SaveChangesAsync();
+                    // Обработка данных
+                    // requestData теперь содержит объект вашей модели с данными из JSON
+
+                    // Создание объекта ответа
+                    var responseObject = new
+                    {
+                        version = "1.0",
+                        session = requestData.session,
+                        response = new
+                        {
+                            text = requestData.request.res_command,
+                            end_session = "false"
+                        }
+                    };
+                    Console.WriteLine(responseObject);
+                    // Сериализация объекта ответа в формат JSON
+                    var responseJson = JsonConvert.SerializeObject(responseObject);
+
+                    // Устанавливаем код состояния 200 OK и отправляем JSON-ответ
+                    context.Response.StatusCode = 200;
+                    context.Response.ContentType = "application/json";
+                    await context.Response.WriteAsync(responseJson);
+                });
+            }
         });
+
     }
 
     private async Task<T> DeserializeRequestAsync<T>(HttpContext context)

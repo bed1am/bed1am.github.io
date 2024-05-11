@@ -1,0 +1,50 @@
+﻿@page
+@model Alice1.Pages.Account.RegisterModel
+@{
+}
+<div class="container border" style="padding:20px">
+    <div>
+        <a class="nav-item">Регистрация нового разработчика</a>
+    </div>
+     <form method="post">
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <div class=" form-group row">
+            <div class="col-2">
+                <label asp-for="DevData.Username"></label>
+            </div>
+            <div class="col-5">
+                <input type="text" asp-for="DevData.Username" />
+            </div>
+            <span class="text-danger" asp-validation-for="DevData.Username"></span>
+        </div>
+        <div class=" form-group row">
+            <div class="col-3">
+                <label asp-for="DevData.Password"></label>
+            </div>
+            <div class="col-5">
+                <input type="password" asp-for="DevData.Password" />
+            </div>
+            <span class="text-danger" asp-validation-for="DevData.Password"></span>
+        </div>
+
+        <div class=" form-group row">
+            <div class="col-3">
+                <label asp-for="DevData.rePassword"></label>
+            </div>
+            <div class="col-5">
+                <input type="password" asp-for="DevData.rePassword" />
+            </div>
+            <span class="text-danger" asp-validation-for="DevData.rePassword"></span>
+        </div>
+
+        <div class=" form-group row">
+            
+            <div class="col-5">
+                <input type="submit" class="btn btn-primary" value="Register"/>
+            </div>
+        </div>
+    </form> 
+    <div>
+        <a asp-area="" asp-page="/Account/Login" class="nav-item">Нажмите для авторизации</a>
+    </div>
+</div>

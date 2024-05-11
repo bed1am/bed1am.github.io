@@ -1,31 +1,216 @@
-html {
-  font-size: 14px;
-}
+/* General styles */
 
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+body {
+    background-color: #31364E;
+    margin: 0;
+    font-family: Arial, sans-serif; /* Set a more modern font */
 }
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+.anytext {
+    color: #d5d5d5ff;
+    background-image: linear-gradient(to right, #e0e0e0, #898989); /* Градиентный фон с левого края (#ff7b8a) до правого края (#ffcd7b) */
+    -webkit-background-clip: text; /* Для поддержки вебкитовских браузеров (Chrome, Safari) */
+    -webkit-text-fill-color: transparent; /* Сделать цвет текста прозрачным для отображения градиента */
 }
 .header {
-    background: #2f175c;
-    margin-bottom: 60px;
+    padding-bottom: 5px;
+    background-color: #30323F;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
-.navbar-light .navbar-toggler {
-    color: #2f175c;
-    border-color: #2f175c;
+.header-line {
+    
+    
+    display: flex;
+    
 }
-body {
-  
-  /*background: #2f175c;*/
-  margin-bottom: 60px;
+.logo {
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 70px;
+    background-image: linear-gradient(to right, #ffffff, #898989); /* Градиентный фон с левого края (#ff7b8a) до правого края (#ffcd7b) */
+    -webkit-background-clip: text; /* Для поддержки вебкитовских браузеров (Chrome, Safari) */
+    -webkit-text-fill-color: transparent; /* Сделать цвет текста прозрачным для отображения градиента */
+    color: #777777;
+    font-family: Cooper;
+    text-decoration: none;
+    text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
 }
+.nav-item {
+    background-image: linear-gradient(to right, #ffffff, #898989); /* Градиентный фон с левого края (#ff7b8a) до правого края (#ffcd7b) */
+    -webkit-background-clip: text; /* Для поддержки вебкитовских браузеров (Chrome, Safari) */
+    -webkit-text-fill-color: transparent; /* Сделать цвет текста прозрачным для отображения градиента */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    padding-right: 10px;
+    font-size: 25px;
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.3s linear;
+}
+    .nav-item:hover {
+        background-image: linear-gradient(to right, #85782e, #898989); /* Градиентный фон с левого края (#ff7b8a) до правого края (#ffcd7b) */
+        -webkit-background-clip: text; /* Для поддержки вебкитовских браузеров (Chrome, Safari) */
+        -webkit-text-fill-color: transparent; /* Сделать цвет текста прозрачным для отображения градиента */
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        padding-right: 10px;
+        font-size: 25px;
+        color: #85782e;
+        text-decoration: none;
+    }
+.button {
+    padding: 14px 18px;
+    background-color: #3C4159;
+    color: #b1b1b1;
+    text-decoration: none;
+    transition: color 0.3s linear;
+}
+    .button:hover {
+        padding: 14px 18px;
+        background-color: #3C4159;
+        color: #e0e0e0;
+        text-decoration: none;
+    }
+.product-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 16px;
+    border-radius: 4px;
+}
+
+
+.product-card__title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.product-card__description {
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+* {
+    box-sizing: border-box;
+}
+.product-wrapper {
+    display: block;
+    width: 100%;
+    float: left;
+    transition: width .2s;
+}
+@media only screen and (min-width: 450px) {
+    .product-wrapper {
+        width: 50%;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .product-wrapper {
+        width: 33.333%;
+    }
+}
+
+@media only screen and (min-width: 1000px) {
+    .product-wrapper {
+        width: 25%;
+    }
+}
+.product {
+    display: block;
+    border: 1px solid #b5e9a7;
+    border-radius: 3px;
+    position: relative;
+    background: #fff;
+    margin: 0 20px 20px 0;
+    text-decoration: none;
+    color: #474747;
+    z-index: 0;
+    height: 300px;
+}
+    .product p {
+        position: relative;
+        margin: 0;
+        font-size: 1em;
+        line-height: 1.4em;
+        height: 5.6em;
+        overflow: hidden;
+    }
+
+
+
+
+.product-item {
+    width: 300px;
+    text-align: center;
+    margin: 0 auto;
+    border-bottom: 2px solid #F5F5F5;
+    background: white;
+    font-family: "Open Sans";
+    transition: .3s ease-in;
+}
+
+    .product-item:hover {
+        border-bottom: 2px solid #fc5a5a;
+    }
+
+    .product-item img {
+        display: block;
+        width: 100%;
+    }
+
+.product-list {
+    background: #fafafa;
+    padding: 15px 0;
+}
+
+    .product-list h3 {
+        font-size: 18px;
+        font-weight: 400;
+        color: #444444;
+        margin: 0 0 10px 0;
+    }
+
+.price {
+    font-size: 16px;
+    color: #fc5a5a;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.button-edit {
+    text-decoration: none;
+    display: inline-block;
+    padding: 0 12px;
+    background: #cccccc;
+    color: white;
+    text-transform: uppercase;
+    font-size: 12px;
+    line-height: 28px;
+    transition: .3s ease-in;
+}
+
+.product-item:hover .button {
+    background: #fc5a5a;
+}
+
+.product-card__button {
+    background-color: #0077d8;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.container-fluid {
+    padding-right: 0;
+    padding-left: 0;
+}
+
+
+.main-content {
+    padding: 10px;
+}
+
+.main-header h1 {
+    margin-top: 0;
+}
+
+

@@ -1,0 +1,54 @@
+﻿@page
+@model Alice1.Views.IndexModel
+@{
+    ViewData["Title"] = "Каталог навыков";
+}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="~/css/site.css" rel="stylesheet" />
+</head>
+<h1 class="nav-item">Добавить новый навык</h1>
+<form method="post">
+    
+    <a class="nav-item">Название навыка:</a>
+    <input type="text" name="name" />
+    <a class="nav-item"></a>
+    <a class="nav-item"></a>
+    <a class="nav-item">Ссылка на Webhook:</a>
+    <input type="text" name="hook_url" />
+    <a class="nav-item"></a>
+    <a class="nav-item"></a>
+    <button class="nav-item" type="submit">
+        Добавить
+    </button>
+
+</form>
+<a class="nav-item">__________________________________________________________________________________________________________________</a>
+<h1 class="nav-item">Ваши навыки</h1>
+<table class="table">
+
+    <thead>
+        <tr>
+            <th class="nav-item">Название навыка</th>
+            <th class="nav-item">Ссылка на вебхук</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(Skill skill in Model.NewSkillList)
+        {
+            <tr>
+                <td class="nav-item" >@skill.name</td>
+                <td class="nav-item" >@skill.hook_url</td>
+                <td><a class="nav-item" asp-page="ReqRes" asp-route-skillId="@skill.Id">Редактировать</a></td>
+                <td>
+                    <form method="post" asp-page-handler="Delete" asp-route-id="@skill.Id">
+                        <button type="submit" class="nav-item">Удалить</button>
+                    </form>
+                </td>
+                
+            </tr>
+        }
+
+    </tbody>
+</table>

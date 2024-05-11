@@ -1,0 +1,94 @@
+﻿@page "/{skillId}/Statistic"
+@model Alice1.Views.StatisticModel
+@{
+    ViewData["Title"] = "Вопрос-ответ";
+}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="~/css/site.css" rel="stylesheet" />
+</head>
+
+<div style="width: 80%; margin: auto;">
+    <canvas id="myChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Получаем данные для диаграммы из C# (сериализованные)
+    //var dataPoints = @Html.Raw(Json.Serialize(ViewData["dataPoints"]));
+    //var labels = ["Январь", "Февраль", "Март", "Апрель", "Май"];
+    //var data = [10, 20, 15, 25, 30];
+    // Разделение данных на метки и значения
+    
+    var dataPoints = JSON.parse('@Html.Raw(Json.Serialize(Model.DataPointsUsers))');
+    console.log(dataPoints); // Проверяем данные в консоли для отладки
+
+    // Разделение данных на метки и значения
+    var labels = [];
+    var data = [];
+
+    dataPoints.forEach(dp => {
+        labels.push(dp.day);
+        data.push(dp.count);
+    });
+    // Переворачиваем массивы labels и data
+    labels.reverse();
+    data.reverse();
+    //console.log(labels); // Проверяем значения меток в консоли для отладки
+    //console.log(data); // Проверяем значения данных в консоли для отладки
+
+    // Инициализация диаграммы
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar', // тип диаграммы (например, bar - столбчатая, line - линейная и т.д.)
+        data: {
+            labels: labels, // метки оси X
+            datasets: [{
+                label: 'Колличество запросов', // название диаграммы
+                data: data, // данные для отображения
+                backgroundColor: 'rgba(75, 192, 192, 0.2)', // цвет фона столбцов
+                borderColor: 'rgba(75, 192, 192, 1)', // цвет границ столбцов
+                borderWidth: 1 // ширина границы
+            }]
+        },
+        options: {
+            responsive: true, // респонсивность диаграммы
+            scales: {
+                y: {
+                    beginAtZero: true // начинать отсчет от нуля на оси Y
+                    
+                }
+            }
+        }
+    });
+
+
+</script>
+
+
+<a class="nav-item">Колличество пользователей использовавших умение: @TempData["user_count"]</a>
+
+<table class="table">
+    
+    <thead>
+        <tr>
+            <th class="nav-item">Имя пользователя</th>
+            <th class="nav-item">Сообщение</th>
+            <th class="nav-item">Дата</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (User user in Model.NewUserList)
+        {
+            <tr>
+                <td class="nav-item">@user.name</td>
+                <td class="nav-item">@user.request</td>
+                <td class="nav-item">@user.date</td>
+                <td><a class="nav-item" asp-page="ReqRes" asp-route-userId="@user.skill"></a></td>
+            </tr>
+        }
+
+    </tbody>
+</table>

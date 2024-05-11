@@ -1,0 +1,52 @@
+﻿@page "/{skillId}/Training"
+@model Alice1.Views.TrainingModel
+@{
+    ViewData["Title"] = "Вопрос-ответ";
+}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="~/css/site.css" rel="stylesheet" />
+</head>
+<form method="post">
+    @* <input type="number" name="Id" /> *@
+    @* <input type="number" name="developer"/> *@
+    @* <input type="text" name="name" />
+    <input type="text" name="hook_url" />
+
+    <button type="submit">
+        Add
+    </button> *@
+
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th class="nav-item">Имя пользователя</th>
+            <th class="nav-item">Сообщение</th>
+            <th class="nav-item">Дата</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (User user in Model.NewUserList)
+        {
+            <tr>
+                <td class="nav-item">@user.name</td>
+                <td class="nav-item">@user.request</td>
+                <td class="nav-item">@user.date</td>
+                
+                <td>
+                    <form method="post">
+                        <input type="hidden" name="skillId1" value="@user.skill.Id" />
+                        <input type="hidden" name="Request" value="@user.request" />
+                        <input type="text" name="Response" />
+                        <button type="submit" class="nav-item">Обучить</button>
+                    </form>
+                </td>
+                
+            </tr>
+        }
+
+    </tbody>
+</table>
+

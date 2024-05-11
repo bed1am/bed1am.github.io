@@ -11,7 +11,7 @@ namespace Alice1.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "developers",
+                name: "Developers",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -25,7 +25,7 @@ namespace Alice1.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "skills",
+                name: "Skills",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -40,7 +40,7 @@ namespace Alice1.Migrations
                     table.ForeignKey(
                         name: "FK_skills_developers_developerId",
                         column: x => x.developerId,
-                        principalTable: "developers",
+                        principalTable: "Developers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -61,13 +61,13 @@ namespace Alice1.Migrations
                     table.ForeignKey(
                         name: "FK_ReqRess_skills_skillId",
                         column: x => x.skillId,
-                        principalTable: "skills",
+                        principalTable: "Skills",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "users",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -83,7 +83,7 @@ namespace Alice1.Migrations
                     table.ForeignKey(
                         name: "FK_users_skills_skillId",
                         column: x => x.skillId,
-                        principalTable: "skills",
+                        principalTable: "Skills",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -95,12 +95,12 @@ namespace Alice1.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_skills_developerId",
-                table: "skills",
+                table: "Skills",
                 column: "developerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_users_skillId",
-                table: "users",
+                table: "Users",
                 column: "skillId");
         }
 
@@ -111,13 +111,13 @@ namespace Alice1.Migrations
                 name: "ReqRess");
 
             migrationBuilder.DropTable(
-                name: "users");
+                name: "Users");
 
             migrationBuilder.DropTable(
-                name: "skills");
+                name: "Skills");
 
             migrationBuilder.DropTable(
-                name: "developers");
+                name: "Developers");
         }
     }
 }

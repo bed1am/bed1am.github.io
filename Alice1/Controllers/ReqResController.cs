@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Alice1.Controllers
 {
-    public class BasicController : Controller
+    public class ReqResController : Controller
     {
         // GET: basic
         public ActionResult Index()
