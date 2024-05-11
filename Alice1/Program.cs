@@ -2,6 +2,8 @@ using Alice1.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,10 +16,12 @@ builder.Services.AddDbContext<MainContext>(options =>
 });
 
 builder.Services.AddDistributedMemoryCache(); // Добавляем распределенный кэш в памяти для сессий
+
 builder.Services.AddSession(options =>
 {
-    options.Cookie.HttpOnly = true; // Устанавливаем опции сессии, например, параметры cookie
+    options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true; // Отмечаем сессию как существенную для работы приложения
+    //options.IdleTimeout = TimeSpan.FromMinutes(30); // Устанавливаем время жизни сессии
 });
 
 var app = builder.Build();
@@ -26,23 +30,23 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-app.UseRouting(); // Переместите эту строку сюда
 
-app.UseAuthentication(); // Добавьте это перед app.UseAuthorization()
+
+app.UseStaticFiles();
+app.UseRouting();
+
+app.UseAuthentication();
 app.UseAuthorization();
+
 app.UseSession(); // Используем сессии в приложении
 
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapRazorPages();
 
-    // Настройте маршрут для страницы входа, чтобы она была по умолчанию
     endpoints.MapControllerRoute(
         name: "default",
         pattern: "{controller=Account}/{action=Login}/{id?}");
