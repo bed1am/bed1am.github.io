@@ -7,7 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="web.config" />
+    <Compile Remove="Pages\Statistics\**" />
+    <Compile Remove="Pages\Training\**" />
+    <Content Remove="Pages\Statistics\**" />
+    <Content Remove="Pages\Training\**" />
+    <EmbeddedResource Remove="Pages\Statistics\**" />
+    <EmbeddedResource Remove="Pages\Training\**" />
+    <None Remove="Pages\Statistics\**" />
+    <None Remove="Pages\Training\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,11 +28,6 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Pages\Training\" />
-    <Folder Include="Pages\Statistics\" />
   </ItemGroup>
 
 </Project>

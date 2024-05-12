@@ -25,6 +25,10 @@ public class Startup
         app.UseRouting();
         app.UseEndpoints(endpoints =>
         {
+            endpoints.MapRazorPages();
+            endpoints.MapControllerRoute(
+            name: "default",
+            pattern: "{controller=Account}/{action=Login}/{id?}");
             foreach (var hookUrl in hookUrls)
             {
                 endpoints.MapPost(hookUrl, async context =>
