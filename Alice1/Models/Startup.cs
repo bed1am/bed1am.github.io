@@ -33,11 +33,17 @@ public class Startup
                     var requestData = await DeserializeRequestAsync<YourModel>(context);
 
                     ReqRes reqRes1 = dbContext.ReqRess
-                    .Where(reqRes => requestData.request.command.Equals(reqRes.Request) && reqRes.skill.hook_url == hookUrl)
-                    .First();
+                            .Where(reqRes => requestData.request.command.Equals(reqRes.Request) && reqRes.skill.hook_url == hookUrl)
+                            .FirstOrDefault();
+                    if(reqRes1 != null)
                     requestData.request.res_command = reqRes1.Response;
-
-
+                    if (requestData.request.command == "")
+                    {
+                        reqRes1 = dbContext.ReqRess
+                            .Where(reqRes => reqRes.Request.Equals(null) && reqRes.skill.hook_url == hookUrl)
+                            .FirstOrDefault();
+                    }
+                    requestData.request.res_command = reqRes1.Response;
                     dbContext.Users.Add(new User
                     {
                         request = requestData.request.command,
@@ -135,7 +141,7 @@ public class ApplicationData
 public class RequestData
 {
     public string command { get; set; }
-    public string res_command { get; set; }
+    public string? res_command { get; set; }
     public string original_utterance { get; set; }
     public NluData nlu { get; set; }
     public MarkupData markup { get; set; }
