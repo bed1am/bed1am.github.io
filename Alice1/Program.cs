@@ -25,9 +25,12 @@ using Microsoft.EntityFrameworkCore;
     });
 
     var app = builder.Build();
+    var startup = new Startup();
 
-    // Configure the HTTP request pipeline.
-    if (!app.Environment.IsDevelopment())
+// Вызываем метод Configure через экземпляр класса Startup и передаем ему app
+startup.Configure(app);
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
     {
         app.UseExceptionHandler("/Error");
         // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
@@ -40,7 +43,7 @@ using Microsoft.EntityFrameworkCore;
 
     app.UseAuthentication(); // Добавьте это перед app.UseAuthorization()
     app.UseAuthorization();
-    app.UseSession(); // Используем сессии в приложении
+     // Используем сессии в приложении
 
 app.UseEndpoints(endpoints =>
 {
@@ -50,4 +53,11 @@ app.UseEndpoints(endpoints =>
     pattern: "{controller=Account}/{action=Login}/{id?}");
 });
 
+//app.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller=Account}/{action=Login}/{id?}");
+
+
 app.Run();
+
+

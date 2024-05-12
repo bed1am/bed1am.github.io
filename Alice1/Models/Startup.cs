@@ -18,24 +18,17 @@ public class Startup
         var optionsBuilder = new DbContextOptionsBuilder<MainContext>();
         optionsBuilder.UseSqlServer("Server=KOMPUTER\\SQLEXPRESS;Database=AliceDB;Trusted_Connection=True;TrustServerCertificate=True;");
         var dbContext = new MainContext(optionsBuilder.Options);
-        
 
+        app.UseSession();
         List<string> hookUrls = dbContext.Skills.Select(s => s.hook_url).ToList();
         Console.WriteLine(hookUrls);
         app.UseRouting();
         app.UseEndpoints(endpoints =>
         {
-            endpoints.MapRazorPages();
-            endpoints.MapControllerRoute(
-            name: "default",
-            pattern: "{controller=Account}/{action=Login}/{id?}");
             foreach (var hookUrl in hookUrls)
             {
                 endpoints.MapPost(hookUrl, async context =>
                 {
-
-
-
                     // Преобразование JSON-данных в модель
                     var requestData = await DeserializeRequestAsync<YourModel>(context);
 
